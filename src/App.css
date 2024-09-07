@@ -1,0 +1,11 @@
+details p{
+    text-indent: 20px;
+}
+.inputBox{
+    border: 1px solid red;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 10px;
+}
