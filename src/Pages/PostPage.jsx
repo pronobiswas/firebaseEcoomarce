@@ -1,8 +1,12 @@
 import React from 'react'
 import { Formik, useFormik } from 'formik';
 import * as Yup from 'yup';
+import firebaseConfig from '../config/firebaseConfigaration'
+
+import { getDatabase, ref, set , push } from "firebase/database";
 
 const PostPage = () => {
+  const db = getDatabase();
 
   const emailRegx = "^[A-Za-z0-9](([a-zA-Z0-9,=\.!\-#|\$%\^&\*\+/\?_`\{\}~]+)*)@(?:[0-9a-zA-Z-]+\.)+[a-zA-Z]{2,9}$"
   const formik = useFormik({
@@ -38,9 +42,21 @@ const PostPage = () => {
 
     // }),
 
-      onSubmit: values => {
+      onSubmit: (values,actions) => {
         // alert(JSON.stringify(values, null, 2));
         console.log(values);
+
+        set(push(ref(db, 'users/')), {
+          username: values.username,
+          userEmail: values.userEmail,
+          postType: values.postType,
+          locaion: values.locaion,
+          decription: values.decription,
+          profile_picture : "imageUrl/img/img.png"
+        }).then(()=>{
+          console.log('datacreate successsfully');
+          
+        });
         
       },
     });
