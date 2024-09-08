@@ -1,7 +1,13 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile
+} from "firebase/auth";
+import { toast, ToastContainer } from "react-toastify";
 
 const SignUp = () => {
   const emailRegx =
@@ -26,14 +32,28 @@ const SignUp = () => {
     }),
 
     onSubmit: (values, actions) => {
-      console.log(values);
       const auth = getAuth();
-      createUserWithEmailAndPassword(auth, values.signUpMail, values.signUpPassword)
+      createUserWithEmailAndPassword(
+        auth,
+        values.signUpMail,
+        values.signUpPassword
+      )
         .then((userCredential) => {
-            console.log("signup successfully");
-            
           // Signed up
           const user = userCredential.user;
+          sendEmailVerification(auth.currentUser).then(() => {
+            updateProfile(auth.currentUser, {
+              displayName: values.signupName,
+              photoURL: "https://example.com/user/profile.jpg",
+            }).then(()=>{
+                console.log("Regestetion successfull");
+                console.log(user);
+                toast("Regestetion successfull")
+                
+                
+            })
+          });
+
           // ...
         })
         .catch((error) => {
@@ -47,6 +67,19 @@ const SignUp = () => {
     <>
       <div className="w-full max-w-[1200px] px-5 flex items-center justify-center">
         <div className="w-full max-w-[420px]">
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            transition:Slide
+          />
           <h1>this is sign Up page</h1>
           <form
             onSubmit={formik.handleSubmit}
