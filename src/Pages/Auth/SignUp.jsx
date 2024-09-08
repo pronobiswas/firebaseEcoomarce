@@ -5,13 +5,16 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
-  updateProfile
+  updateProfile,
 } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const emailRegx =
     "^[A-Za-z0-9](([a-zA-Z0-9,=.!-#|$%^&*+/?_`{}~]+)*)@(?:[0-9a-zA-Z-]+.)+[a-zA-Z]{2,9}$";
+    const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: {
@@ -33,6 +36,7 @@ const SignUp = () => {
 
     onSubmit: (values, actions) => {
       const auth = getAuth();
+    
       createUserWithEmailAndPassword(
         auth,
         values.signUpMail,
@@ -45,13 +49,14 @@ const SignUp = () => {
             updateProfile(auth.currentUser, {
               displayName: values.signupName,
               photoURL: "https://example.com/user/profile.jpg",
-            }).then(()=>{
-                console.log("Regestetion successfull");
-                console.log(user);
-                toast("Regestetion successfull")
-                
-                
-            })
+            }).then(() => {
+              console.log("Regestetion successfull");
+              console.log(user);
+              toast("Regestetion successfull");
+              setTimeout(() => {
+                navigate("/signin");
+              }, 2000);
+            });
           });
 
           // ...
@@ -65,21 +70,21 @@ const SignUp = () => {
   });
   return (
     <>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       <div className="w-full max-w-[1200px] px-5 flex items-center justify-center">
         <div className="w-full max-w-[420px]">
-          <ToastContainer
-            position="top-right"
-            autoClose={2000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-            transition:Slide
-          />
+          
           <h1>this is sign Up page</h1>
           <form
             onSubmit={formik.handleSubmit}
