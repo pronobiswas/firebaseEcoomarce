@@ -10,6 +10,7 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
   const emailRegx =
@@ -68,6 +69,7 @@ const SignUp = () => {
         });
     },
   });
+  
   return (
     <>
         <ToastContainer
@@ -136,7 +138,7 @@ const SignUp = () => {
             </button>
             <div>
               <a href="#">aldery have an account?</a>
-              <a href="#">SignIn</a>
+              <Link to="/signin">Sign Up</Link>
             </div>
           </form>
         </div>
