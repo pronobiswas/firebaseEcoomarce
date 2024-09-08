@@ -7,6 +7,8 @@ import {
 import RootLayout from './Layout/RootLayout';
 import Homepage from './Pages/Homepage';
 import PostPage from './Pages/PostPage';
+import SignUp from './Pages/Auth/SignUp';
+import SignIn from './Pages/Auth/SignIn';
 
 function App() {
 
@@ -15,6 +17,8 @@ function App() {
       <>
       
         <Route element= {<RootLayout/>}>
+          <Route path='/signup' element={<SignUp/>} />
+          <Route path='/signin' element={<SignIn/>} />
           <Route path='/' element={<Homepage/>} />
           <Route path='/post' element={<PostPage/>} />
         </Route>

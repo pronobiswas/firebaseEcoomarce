@@ -42,8 +42,8 @@ const PostPage = () => {
 
     // }),
 
-      onSubmit: (values,actions) => {
-        // alert(JSON.stringify(values, null, 2));
+      onSubmit: (values,actions,e) => {
+        
         console.log(values);
 
         set(push(ref(db, 'users/')), {
