@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from '../../../public/pic.png'
+import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { FaRegUserCircle } from "react-icons/fa";
 
@@ -11,7 +12,7 @@ const Header = () => {
           <div className='w-full h-full max-w-[1200px]  mx-auto flex items-center gap-5'>
 
             <div className="logo max-w-[120px] h-14 overflow-hidden">
-              <img src={logo} alt=""/>
+              <Link to={'/'}><img src={logo} alt="logo"/></Link>
             </div>
 
             <div className="navigationFrom w-1/2 flex gap-4">
@@ -28,8 +29,8 @@ const Header = () => {
             </div>
 
             <div className="adminPart w-full flex items-center justify-end gap-4">
-              <button>post here</button>
-              <span><FaRegUserCircle /></span>
+              <Link to={'/post'}><span>post here</span></Link>
+              <Link to={'/signup'}><span><FaRegUserCircle /></span></Link>
             </div>
 
           </div>

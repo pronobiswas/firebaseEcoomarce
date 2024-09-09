@@ -6,12 +6,17 @@ import * as Yup from "yup";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useSelector, useDispatch } from 'react-redux';
+import { loggedInUser } from '../../Features/AuthSlice.js';
+
 
 const SignIn = () => {
   const emailRegx =
     "^[A-Za-z0-9](([a-zA-Z0-9,=.!-#|$%^&*+/?_`{}~]+)*)@(?:[0-9a-zA-Z-]+.)+[a-zA-Z]{2,9}$";
     const auth = getAuth();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       signInMail: "",
@@ -35,13 +40,18 @@ const SignIn = () => {
       signInWithEmailAndPassword(auth, values.signInMail, values.signInPassword)
         .then((userCredential) => {
           const user = userCredential.user;
-          navigate('/')
+          if(user.emailVerified
+          ){
+            localStorage.setItem("loggedInUser" , JSON.stringify(user));
+            dispatch(loggedInUser(user))
+            navigate('/')
+          }else{
+            toast("verify your mail");
+          }
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(errorCode);
-          console.log(errorMessage);
           
           toast("Creadential Error");
         });

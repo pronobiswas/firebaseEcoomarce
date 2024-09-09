@@ -138,7 +138,10 @@ const SignUp = () => {
             </button>
             <div>
               <a href="#">aldery have an account?</a>
-              <Link to="/signin">Sign Up</Link>
+              
+              <span className="text-blue-500">
+              <Link to="/signin">Sign In</Link>
+              </span>
             </div>
           </form>
         </div>
