@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UserInfoControl = () => {
+const AllPost = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const UserInfoControl = () => {
   )
 }
 
-export default UserInfoControl
+export default AllPost

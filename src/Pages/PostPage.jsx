@@ -46,7 +46,7 @@ const PostPage = () => {
         
         console.log(values);
 
-        set(push(ref(db, 'users/')), {
+        set(push(ref(db, 'allpost/')), {
           username: values.username,
           userEmail: values.userEmail,
           postType: values.postType,
