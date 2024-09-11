@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../../public/pic.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loggedInUser } from "../../Features/AuthSlice.js";
 import { getAuth, signOut } from "firebase/auth";
@@ -12,27 +12,43 @@ import { FaRegUserCircle } from "react-icons/fa";
 const Header = () => {
   const auth = getAuth();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const logInUser = useSelector((state) => state.loggedInUserData.value);
   const [toggleUserBox, setToggleUserBox] = useState(false);
+
+  
+
   const handletoggleUserBox = () => {
     setToggleUserBox(!toggleUserBox);
     console.log(logInUser);
   };
-  const handleSignOut= ()=>{
-    signOut(auth).then(() => {
-      localStorage.removeItem("loggedInUser")
-      dispatch(loggedInUser(null))
-      setToggleUserBox(false);
-      toast("LogOut Successfully");
-    }).catch((error) => {
-      console.log("An error happened.");
-      
-    });
-    
-  }
+
+  const handlePostBtn = () => {
+    console.log(logInUser);
+    logInUser ? navigate("/post") : toast("you must login first");
+  };
+
+  const handleSignIn = () => {
+    toast("sign in successfully")
+    navigate("/signin");
+    setToggleUserBox(false);
+  };
+
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        localStorage.removeItem("loggedInUser");
+        dispatch(loggedInUser(null));
+        setToggleUserBox(false);
+        toast("LogOut Successfully");
+      })
+      .catch((error) => {
+        console.log("An error happened.");
+      });
+  };
   return (
     <>
-    <ToastContainer
+      <ToastContainer
         position="top-right"
         autoClose={2000}
         hideProgressBar={false}
@@ -66,11 +82,16 @@ const Header = () => {
                 </span>
               </div>
             </div>
+            {/* =========post here button======= */}
             <div className="adminPart w-full flex items-center justify-end gap-4">
-              <Link to={"/post"}>
-                <span>post here</span>
-              </Link>
+              <button
+                onClick={handlePostBtn}
+                className="bg-slate-300 px-5 py-2 rounded-l-sm rounded-r-3xl font-bold hover:bg-slate-400  hover:text-slate-100 "
+              >
+                post here
+              </button>
 
+              {/* ===========user icon======== */}
               <div
                 onClick={handletoggleUserBox}
                 className="bg-slate-300 p-2 rounded-full"
@@ -102,13 +123,17 @@ const Header = () => {
                     <br></br>
 
                     {!logInUser ? (
-                      <Link to={"/signin"}>
-                        <button className="bg-green-700 px-6 py-1 text-white font-bold	 rounded-md ">
-                          Sign in
-                        </button>
-                      </Link>
+                      <button
+                        onClick={handleSignIn}
+                        className="bg-green-700 px-6 py-1 text-white font-bold	 rounded-md "
+                      >
+                        Sign in
+                      </button>
                     ) : (
-                      <button onClick={handleSignOut} className="bg-red-700 px-6 py-1 text-white font-bold	 rounded-md ">
+                      <button
+                        onClick={handleSignOut}
+                        className="bg-red-700 px-6 py-1 text-white font-bold	 rounded-md "
+                      >
                         Sign Out
                       </button>
                     )}
@@ -117,7 +142,6 @@ const Header = () => {
               </div>
             ) : null}
             {/* ========user Sign up/In ? signOut box=======  */}
-
           </div>
         </nav>
       </header>

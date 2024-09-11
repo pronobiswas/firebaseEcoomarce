@@ -36,8 +36,8 @@ const Homepage = () => {
   }
 
   return (
-    <div className="w-full max-w-[1200px] h-[500px] mx-auto px-5 flex">
-      <div className="filterMenu w-1/6 h-full bg-slate-200">
+    <div className="w-full max-w-[1200px] h-full min-h-[600px] mx-auto px-5 flex">
+      <div className="filterMenu w-1/6 h-full min-h-[600px] bg-slate-200">
         <h2 className="text-2xl">the filter</h2>
         <div>
           <details>
@@ -70,22 +70,23 @@ const Homepage = () => {
         </div>
       </div>
 
-      <div className="contentSection w-4/6 h-full bg-slate-300">
-        <h2>the content</h2>
-        <div className="row flex justify-center items-center overflow-hidden">
+      <div className="contentSection w-4/6 h-full  px-2 ">
+        
+        <div className="row grid gap-4 grid-cols-4 grid-rows-2 overflow-hidden">
           {allPosts.map((item, index) => (
             <div key={index} onClick={()=>handleItem(item)} >
               <PostCard
                 title={item.username}
                 catagory={item.postType}
-                location={item.decription}
+                location={item.location}
+                description={item.decription}
               />
             </div>
           ))}
         </div>
       </div>
 
-      <div className="adversmentSection w-1/6 h-full bg-slate-500">
+      <div className="adversmentSection w-1/6 h-full min-h-[600px] bg-slate-500">
         <h2>the addversment</h2>
       </div>
     </div>

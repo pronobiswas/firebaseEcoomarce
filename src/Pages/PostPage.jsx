@@ -62,11 +62,12 @@ const PostPage = () => {
     });
   return (
     <>
-      <div className='w-full max-w-[1200px] mx-auto px-5'>
-        <h2 className='text-2xl'>post your service with aquerecy</h2>
-        <div className='bg-red-300 w-full max-w-[480px] mx-auto px-5 py-8'>
+      <div className='w-full max-w-[1200px] mx-auto px-5 text-center'>
+        <h2 className='text-2xl mb-5'>post your service with aquerecy</h2>
+        <div className='bg-slate-200 w-full max-w-[480px] mx-auto px-5 py-8 rounded-2xl'>
           <form className='' onSubmit={formik.handleSubmit}>
             <div className='flex flex-col gap-4'>
+
               <div className="username inputBox">
                   <label htmlFor="username">Your Name</label>
                   <input 
@@ -105,7 +106,7 @@ const PostPage = () => {
                   placeholder='Enter your full Location' />
               </div>
               <div className="decription inputBox">
-                  <label htmlFor="decription">Your location</label>
+                  <label htmlFor="decription">Post Description</label>
                   <textarea 
                   name="decription" 
                   id="decription"
@@ -114,7 +115,8 @@ const PostPage = () => {
                   placeholder='Enter your full Location'></textarea>
               </div>
             </div>
-            <button type="submit">post</button>
+            <button className='bg-blue-300 mt-5 px-12 py-2 font-semibold text-xl rounded-xl hover:bg-blue-500 hover:text-white'
+            type="submit">Post</button>
 
           </form>
         </div>
