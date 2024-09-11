@@ -9,6 +9,7 @@ import Homepage from './Pages/Homepage';
 import PostPage from './Pages/PostPage';
 import SignUp from './Pages/Auth/SignUp';
 import SignIn from './Pages/Auth/SignIn';
+import ItemDetails from './Pages/ItemDetails';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path='/signin' element={<SignIn/>} />
           <Route path='/' element={<Homepage/>} />
           <Route path='/post' element={<PostPage/>} />
+          <Route path='/itemDetails' element={<ItemDetails/>} />
         </Route>
       </>
     )

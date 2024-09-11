@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import PostCard from "../component/PostCard";
+import { useSelector, useDispatch } from 'react-redux'
+import { itemInfo } from "../Features/ItemSlice.js";
+import { useNavigate } from "react-router-dom";
 
 const Homepage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logInUser = useSelector((state) => state.loggedInUserData.value);
   const [allPosts, setAllPosts] = useState([]);
-
+  // ===get data from database=====
   const db = getDatabase();
-
   useEffect(() => {
     const allPostRef = ref(db, "allpost/");
     onValue(allPostRef, (snapshot) => {
@@ -20,7 +25,15 @@ const Homepage = () => {
       setAllPosts(alldata);
     });
   }, []);
-  console.log(allPosts);
+
+
+  // =======hanf=dle items information========
+  
+
+  const handleItem = (item)=>{
+    dispatch(itemInfo(item))
+    navigate('/itemDetails')
+  }
 
   return (
     <div className="w-full max-w-[1200px] h-[500px] mx-auto px-5 flex">
@@ -60,9 +73,8 @@ const Homepage = () => {
       <div className="contentSection w-4/6 h-full bg-slate-300">
         <h2>the content</h2>
         <div className="row flex justify-center items-center overflow-hidden">
-          {console.log(allPosts)}
           {allPosts.map((item, index) => (
-            <div key={index}>
+            <div key={index} onClick={()=>handleItem(item)} >
               <PostCard
                 title={item.username}
                 catagory={item.postType}

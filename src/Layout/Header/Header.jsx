@@ -24,7 +24,6 @@ const Header = () => {
       dispatch(loggedInUser(null))
       setToggleUserBox(false);
       toast("LogOut Successfully");
-      navigate('/')
     }).catch((error) => {
       console.log("An error happened.");
       
@@ -33,6 +32,18 @@ const Header = () => {
   }
   return (
     <>
+    <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <header>
         <nav className="w-full  px-5">
           <div className="w-full h-full max-w-[1200px]  mx-auto flex items-center gap-5">
