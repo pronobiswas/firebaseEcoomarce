@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { getDatabase, ref, onValue } from "firebase/database";
 import PostCard from "../component/PostCard";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from "react-redux";
 import { itemInfo } from "../Features/ItemSlice.js";
 import { useNavigate } from "react-router-dom";
+import Banner from "../component/Banner.jsx";
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import { RiH1 } from "react-icons/ri";
 
 const Homepage = () => {
   const dispatch = useDispatch();
@@ -17,6 +25,8 @@ const Homepage = () => {
     onValue(allPostRef, (snapshot) => {
       // ======get all post=======
       const data = snapshot.val();
+      console.log(data.size);
+      
       // =====convert alldata object into an array======
       let alldata = [];
       snapshot.forEach((item) => {
@@ -26,14 +36,12 @@ const Homepage = () => {
     });
   }, []);
 
-
   // =======hanf=dle items information========
-  
 
-  const handleItem = (item)=>{
-    dispatch(itemInfo(item))
-    navigate('/itemDetails')
-  }
+  const handleItem = (item) => {
+    dispatch(itemInfo(item));
+    navigate("/itemDetails");
+  };
 
   return (
     <div className="w-full max-w-[1200px] h-full min-h-[600px] mx-auto px-5 flex">
@@ -71,18 +79,43 @@ const Homepage = () => {
       </div>
 
       <div className="contentSection w-4/6 h-full  px-2 ">
-        
-        <div className="row grid gap-4 grid-cols-4 grid-rows-2 overflow-hidden">
-          {allPosts.map((item, index) => (
-            <div key={index} onClick={()=>handleItem(item)} >
-              <PostCard
-                title={item.username}
-                catagory={item.postType}
-                location={item.location}
-                description={item.decription}
-              />
-            </div>
-          ))}
+        <Banner />
+        <div className="">
+          <h2>All post are avialable here</h2>
+          {/* ===========slidertest======== */}
+          <Swiper
+            slidesPerView={4}
+            spaceBetween={2}
+            pagination={{
+              clickable: true,
+            }}
+            autoplay={{
+              delay: 1000,
+              disableOnInteraction: true,
+            }}
+            navigation={true}
+            modules={[Autoplay, Pagination, Navigation]}
+            className="mySwiper"
+          >
+            {allPosts.map((item, index) => (
+              <SwiperSlide>
+                <div key={index} onClick={() => handleItem(item)}>
+                  <PostCard
+                    title={item.username}
+                    catagory={item.postType}
+                    location={item.location}
+                    description={item.decription}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          {/* ===========slidertest======== */}
+          
+
+
+
+
         </div>
       </div>
 

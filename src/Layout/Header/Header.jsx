@@ -62,7 +62,7 @@ const Header = () => {
       />
       <header>
         <nav className="w-full  px-5">
-          <div className="w-full h-full max-w-[1200px]  mx-auto flex flex-col md:flex-row  items-center gap-5 justify-between ">
+          <div className="w-full h-full max-w-[1200px] relative  mx-auto flex flex-col md:flex-row  items-center gap-5 justify-between ">
 
             <div className="logo max-w-[120px] h-14 overflow-hidden">
               <Link to={"/"}>
