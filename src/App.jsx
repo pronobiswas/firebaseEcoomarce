@@ -10,6 +10,7 @@ import PostPage from './Pages/PostPage';
 import SignUp from './Pages/Auth/SignUp';
 import SignIn from './Pages/Auth/SignIn';
 import ItemDetails from './Pages/ItemDetails';
+import UserProfile from './Pages/UserProfile';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route element= {<RootLayout/>}>
           <Route path='/signup' element={<SignUp/>} />
           <Route path='/signin' element={<SignIn/>} />
+          <Route path='/profile' element={<UserProfile/>} />
           <Route path='/' element={<Homepage/>} />
           <Route path='/post' element={<PostPage/>} />
           <Route path='/itemDetails' element={<ItemDetails/>} />

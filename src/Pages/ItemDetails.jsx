@@ -20,9 +20,11 @@ const ItemDetails = () => {
         <div>
             <h1>{itemInfo.username}</h1>
             <p>{itemInfo.locaion}</p>
-            <p>{itemInfo.postType}</p>
-            <p>{itemInfo.decription}</p>
             <p>{itemInfo.userEmail}</p>
+            <p>{itemInfo.userPhoneNumber}</p>
+            <p>{itemInfo.postType}</p>
+            <p>{itemInfo.subCatagory}</p>
+            <p>{itemInfo.decription}</p>
             <p>{itemInfo.id}</p>
         </div>
       </div>

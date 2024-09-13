@@ -20,7 +20,6 @@ const Header = () => {
 
   const handletoggleUserBox = () => {
     setToggleUserBox(!toggleUserBox);
-    console.log(logInUser);
   };
 
   const handlePostBtn = () => {
@@ -29,10 +28,14 @@ const Header = () => {
   };
 
   const handleSignIn = () => {
-    toast("sign in successfully")
     navigate("/signin");
     setToggleUserBox(false);
   };
+
+  const handleProfile = ()=>{
+    navigate("/profile");
+    setToggleUserBox(false);
+  }
 
   const handleSignOut = () => {
     signOut(auth)
@@ -110,12 +113,11 @@ const Header = () => {
                 <div className="userControlBox w-60 h-60 bg-slate-200">
                   <div className="userControlBoxHeader w-full h-14 bg-slate-300 pt-3">
                     <div className="avatar text-center">
-                      {console.log(logInUser)}
                       <span>
                         {logInUser ? logInUser.displayName : "username"}
                       </span>
 
-                      <div className="w-fit  rounded-full text-2xl mx-auto bg-slate-50 p-2 border-4 border-indigo-400 shadow-inner">
+                      <div onClick={handleProfile} className="w-fit  rounded-full text-2xl mx-auto bg-slate-50 p-2 border-4 border-indigo-400 shadow-inner">
                         <FaRegUserCircle />
                       </div>
                     </div>

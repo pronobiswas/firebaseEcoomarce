@@ -8,19 +8,21 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const emailRegx =
     "^[A-Za-z0-9](([a-zA-Z0-9,=.!-#|$%^&*+/?_`{}~]+)*)@(?:[0-9a-zA-Z-]+.)+[a-zA-Z]{2,9}$";
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
       signupName: "",
       signUpMail: "",
+      phoneNumber: "",
+      fullAddress: "",
       signUpPassword: "",
     },
     validationSchema: Yup.object({
@@ -37,7 +39,7 @@ const SignUp = () => {
 
     onSubmit: (values, actions) => {
       const auth = getAuth();
-    
+
       createUserWithEmailAndPassword(
         auth,
         values.signUpMail,
@@ -49,6 +51,8 @@ const SignUp = () => {
           sendEmailVerification(auth.currentUser).then(() => {
             updateProfile(auth.currentUser, {
               displayName: values.signupName,
+              telePhone: values.phoneNumber,
+              address: values.fullAddress,
               photoURL: "https://example.com/user/profile.jpg",
             }).then(() => {
               console.log("Regestetion successfull");
@@ -69,24 +73,23 @@ const SignUp = () => {
         });
     },
   });
-  
+
   return (
     <>
-        <ToastContainer
-          position="top-right"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="w-full max-w-[1200px] px-5 flex items-center justify-center">
         <div className="w-full max-w-[420px]">
-          
           <h1>this is sign Up page</h1>
           <form
             onSubmit={formik.handleSubmit}
@@ -119,10 +122,40 @@ const SignUp = () => {
               ) : null}
             </div>
 
-            <div className="password username flex flex-col gap-2 border border-1 border-slate-400 rounded p-2">
-              <label htmlFor="signUpPassword">password</label>
+            <div className="phoneNumber flex flex-col gap-2 border border-1 border-slate-400 rounded p-2">
+              <label htmlFor="phoneNumber">Enter your phone number</label>
               <input
                 type="text"
+                id="phoneNumber"
+                name="phoneNumber"
+                onChange={formik.handleChange}
+                value={formik.values.phoneNumber}
+                placeholder="Enter your phoneNumber"
+              />
+              {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
+                <div>{formik.errors.phoneNumber}</div>
+              ) : null}
+            </div>
+
+            <div className="fullAddress flex flex-col gap-2 border border-1 border-slate-400 rounded p-2">
+              <label htmlFor="fullAddress">Enter your Address</label>
+              <input
+                type="text"
+                id="fullAddress"
+                name="fullAddress"
+                onChange={formik.handleChange}
+                value={formik.values.fullAddress}
+                placeholder="Enter your fullAddress"
+              />
+              {formik.touched.fullAddress && formik.errors.fullAddress ? (
+                <div>{formik.errors.fullAddress}</div>
+              ) : null}
+            </div>
+
+            <div className="password flex flex-col gap-2 border border-1 border-slate-400 rounded p-2">
+              <label htmlFor="signUpPassword">password</label>
+              <input
+                type="password"
                 id="signUpPassword"
                 name="signUpPassword"
                 onChange={formik.handleChange}
@@ -138,9 +171,9 @@ const SignUp = () => {
             </button>
             <div>
               <a href="#">aldery have an account?</a>
-              
+
               <span className="text-blue-500">
-              <Link to="/signin">Sign In</Link>
+                <Link to="/signin">Sign In</Link>
               </span>
             </div>
           </form>

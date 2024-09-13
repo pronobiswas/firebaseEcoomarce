@@ -40,10 +40,13 @@ const SignIn = () => {
       signInWithEmailAndPassword(auth, values.signInMail, values.signInPassword)
         .then((userCredential) => {
           const user = userCredential.user;
+          console.log(user);
+          
           if(user.emailVerified
           ){
             localStorage.setItem("loggedInUser" , JSON.stringify(user));
             dispatch(loggedInUser(user))
+            toast("sign In Successfully");
             navigate('/')
           }else{
             toast("verify your mail");

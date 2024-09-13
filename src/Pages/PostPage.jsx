@@ -17,6 +17,7 @@ const PostPage = () => {
     initialValues: {
       username: "",
       userEmail: "",
+      userPhoneNumber: "",
       subCatagory: "",
       postType: "",
       locaion: "",
@@ -32,6 +33,10 @@ const PostPage = () => {
     //   userEmail: Yup.string()
     //   .email('Invalid email address')
     //   .matches(emailRegx , "Enter Your Full mail")
+    //   .required('Required'),
+
+    // userPhoneNumber: Yup.string()
+    //   .userPhoneNumber('Invalid userPhoneNumber')
     //   .required('Required'),
 
     //   postType: Yup.string()
@@ -53,6 +58,7 @@ const PostPage = () => {
       set(push(ref(db, "allpost/")), {
         username: values.username,
         userEmail: values.userEmail,
+        userPhoneNumber: values.userPhoneNumber,
         postType: values.postType,
         subCatagory: values.subCatagory,
         locaion: values.locaion,
@@ -72,6 +78,7 @@ const PostPage = () => {
         <div className="bg-slate-200 w-full max-w-[480px] mx-auto px-5 py-8 rounded-2xl">
           <form className="" onSubmit={formik.handleSubmit}>
             <div className="flex flex-col gap-4">
+
               <div className="username inputBox">
                 <label htmlFor="username">Your Name</label>
                 <input
@@ -86,6 +93,7 @@ const PostPage = () => {
                   <div>{formik.errors.username}</div>
                 ) : null}
               </div>
+
               <div className="userEmail inputBox">
                 <label htmlFor="userEmail">Your email</label>
                 <input
@@ -97,6 +105,19 @@ const PostPage = () => {
                   placeholder="Enter your Email"
                 />
               </div>
+
+              <div className="userPhonenumber inputBox">
+                <label htmlFor="userEmail">Your Phone number</label>
+                <input
+                  type="phone"
+                  id="userPhoneNumber"
+                  name="userPhoneNumber"
+                  onChange={formik.handleChange}
+                  value={formik.values.userPhoneNumber}
+                  placeholder="Enter Your Phone number"
+                />
+              </div>
+
               <div className="postType inputBox flex flex-row justify-between gap-5">
                 <select
                   className="w-full"
@@ -199,6 +220,7 @@ const PostPage = () => {
                   placeholder="Enter your full Location"
                 ></textarea>
               </div>
+
             </div>
             <button
               className="bg-blue-300 mt-5 px-12 py-2 font-semibold text-xl rounded-xl hover:bg-blue-500 hover:text-white"
