@@ -1,22 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { getDatabase, ref, onValue } from "firebase/database";
 
 const UserProfile = () => {
+  const [userPost, setUserPost] = useState([]);
+  const db = getDatabase();
   const logInUser = useSelector((state) => state.loggedInUserData.value);
+
+  useEffect(() => {
+    const userPostRef = ref(db, "allpost/");
+    onValue(userPostRef, (snapshot) => {
+      // ======get user all post=======
+      const data = snapshot.val();
+
+      // =====convert alldata object into an array======
+      let userpostdata = [];
+
+      snapshot.forEach((item) => {
+        if (item.val().posterId == logInUser.uid) {
+          userpostdata.push({ ...item.val(), id: item.key });
+        }
+      });
+      setUserPost(userpostdata);
+    });
+  }, []);
+  console.log(userPost);
+
   return (
-    <div className="w-full max-w-[1200px] mx-auto bg-slate-300 min-h-[400px]">
+    <div className="w-full max-w-[1200px] mx-auto bg-slate-300 min-h-[400px] px-5">
       <div className="w-full flex">
-        <div className="userDesc">
-          <div className="profilePic w-60 h-60 bg-purple-700">
+        <div className="userDesc w-2/6">
+          <div className="profilePic w-40 h-40 bg-purple-700 rounded-full mb-8">
             <img src="" alt="" />
-            {console.log(logInUser)}
           </div>
           <div className="UserPersolnalData">
             <h4>{logInUser.displayName}</h4>
             <p>{logInUser.email}</p>
           </div>
         </div>
-        <div className="userAcivity"></div>
+
+        <div className="userAcivity w-4/6">
+          {userPost.map((item, index) => (
+            
+            
+            <div key={index} className="postedItem p-2 border border-sky-500">
+              <div className="flex gap-6">
+                <div className="postimage w-20 h-20 bg-slate-500">
+                  <img src="#" alt="" />
+                </div>
+                <div>
+                  <p>{item.postType}</p>
+                  <p>{item.subCatagory}</p>
+                  <p>{item.locaion}</p>
+                </div>
+              </div>
+              <p>{item.decription}</p>
+              <div>
+                <button className="bg-red-600 text-white px-8 py-2">
+                  delete
+                </button>
+                <button className="bg-sky-600 text-white px-8 py-2">
+                  eidit
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -23,7 +23,6 @@ const Header = () => {
   };
 
   const handlePostBtn = () => {
-    console.log(logInUser);
     logInUser ? navigate("/post") : toast("you must login first");
   };
 

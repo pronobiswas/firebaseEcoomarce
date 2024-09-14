@@ -12,6 +12,9 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import { RiH1 } from "react-icons/ri";
+import BasaVara from "../component/BasaVara.jsx";
+import Decoration from "../component/Decoration.jsx";
+import moment from "moment";
 
 const Homepage = () => {
   const dispatch = useDispatch();
@@ -25,8 +28,7 @@ const Homepage = () => {
     onValue(allPostRef, (snapshot) => {
       // ======get all post=======
       const data = snapshot.val();
-      console.log(data.size);
-      
+
       // =====convert alldata object into an array======
       let alldata = [];
       snapshot.forEach((item) => {
@@ -90,7 +92,7 @@ const Homepage = () => {
               clickable: true,
             }}
             autoplay={{
-              delay: 1000,
+              delay: 1500,
               disableOnInteraction: true,
             }}
             navigation={true}
@@ -98,25 +100,23 @@ const Homepage = () => {
             className="mySwiper"
           >
             {allPosts.map((item, index) => (
-              <SwiperSlide>
-                <div key={index} onClick={() => handleItem(item)}>
+              <SwiperSlide key={index}>
+                <div  onClick={() => handleItem(item)}>
                   <PostCard
                     title={item.username}
                     catagory={item.postType}
                     location={item.location}
                     description={item.decription}
+                    Date={moment(item.date, "YYYYMMDD hh:mm").fromNow()}
                   />
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
           {/* ===========slidertest======== */}
-          
-
-
-
-
         </div>
+        <BasaVara />
+        <Decoration />
       </div>
 
       <div className="adversmentSection w-1/6 h-full min-h-[600px] bg-slate-500">

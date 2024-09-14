@@ -2,14 +2,17 @@ import React from "react";
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import firebaseConfig from "../config/firebaseConfigaration";
+import { useSelector, useDispatch } from "react-redux";
 
 import { getDatabase, ref, set, push } from "firebase/database";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import moment from "moment/moment";
 
 const PostPage = () => {
   const db = getDatabase();
   const navigate = useNavigate();
+  const logInUser = useSelector((state) => state.loggedInUserData.value);
 
   const emailRegx =
     "^[A-Za-z0-9](([a-zA-Z0-9,=.!-#|$%^&*+/?_`{}~]+)*)@(?:[0-9a-zA-Z-]+.)+[a-zA-Z]{2,9}$";
@@ -22,6 +25,7 @@ const PostPage = () => {
       postType: "",
       locaion: "",
       decription: "",
+      posterId: "",
     },
 
     // validationSchema: Yup.object({
@@ -64,6 +68,10 @@ const PostPage = () => {
         locaion: values.locaion,
         decription: values.decription,
         profile_picture: "imageUrl/img/img.png",
+        posterId: logInUser.uid,
+        date: `${new Date().getFullYear()}-${
+          new Date().getMonth() + 1
+        }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getMilliseconds()}`,
       }).then(() => {
         console.log("datacreate successsfully");
         toast("post successfully");
@@ -78,7 +86,6 @@ const PostPage = () => {
         <div className="bg-slate-200 w-full max-w-[480px] mx-auto px-5 py-8 rounded-2xl">
           <form className="" onSubmit={formik.handleSubmit}>
             <div className="flex flex-col gap-4">
-
               <div className="username inputBox">
                 <label htmlFor="username">Your Name</label>
                 <input
@@ -220,7 +227,6 @@ const PostPage = () => {
                   placeholder="Enter your full Location"
                 ></textarea>
               </div>
-
             </div>
             <button
               className="bg-blue-300 mt-5 px-12 py-2 font-semibold text-xl rounded-xl hover:bg-blue-500 hover:text-white"
