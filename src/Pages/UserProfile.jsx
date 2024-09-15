@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, remove } from "firebase/database";
 
 const UserProfile = () => {
   const [userPost, setUserPost] = useState([]);
@@ -24,7 +24,13 @@ const UserProfile = () => {
       setUserPost(userpostdata);
     });
   }, []);
-  console.log(userPost);
+
+  const handleDelete = (item)=>{
+    console.log("handle delete");
+    console.log(item);
+    remove(ref(db, '/allpost/'+`${item.id}`))
+    
+  }
 
   return (
     <div className="w-full max-w-[1200px] mx-auto bg-slate-300 min-h-[400px] px-5">
@@ -56,7 +62,7 @@ const UserProfile = () => {
               </div>
               <p>{item.decription}</p>
               <div>
-                <button className="bg-red-600 text-white px-8 py-2">
+                <button onClick={()=>handleDelete(item)} className="bg-red-600 text-white px-8 py-2">
                   delete
                 </button>
                 <button className="bg-sky-600 text-white px-8 py-2">
