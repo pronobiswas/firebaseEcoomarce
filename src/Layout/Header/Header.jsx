@@ -50,21 +50,10 @@ const Header = () => {
   };
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      
       <header>
-        <nav className="w-full  px-5">
-          <div className="w-full h-full max-w-[1200px] relative  mx-auto flex flex-col md:flex-row  items-center gap-5 justify-between ">
+        <nav className="w-full px-1">
+          <div className="w-full h-full max-w-[1200px] mx-auto flex flex-col md:flex-row  items-center gap-5 justify-between ">
 
             <div className="logo max-w-[120px] h-14 overflow-hidden">
               <Link to={"/"}>
@@ -72,23 +61,25 @@ const Header = () => {
               </Link>
             </div>
 
-            <div className="navigationFrom w-1/2 flex  gap-4">
-              <select className="w-[200px]">
-                <option value="dhaka">dhaka</option>
-                <option value="dhaka">dhaka</option>
-                <option value="dhaka">dhaka</option>
-                <option value="dhaka">dhaka</option>
+            <div className="navigationFrom w-full flex items-center justify-center gap-4">
+              <select className="w-full">
+                <option value="dhaka">Dhaka</option>
+                <option value="dhaka">Khulna</option>
+                <option value="dhaka">Chitagong</option>
+                <option value="dhaka">Rajshi</option>
+                <option value="dhaka">Rangpur</option>
+                <option value="dhaka">Barishal</option>
               </select>
-              <div className="searchInput flex items-center">
-                <input type="text" placeholder="search here" />
-                <span className="bg-white text-2xl">
+              <div className="searchInput w-full  flex items-center">
+                <input type="text" placeholder="search here" className=" w-full" />
+                <span className=" text-2xl">
                   <CiSearch />
                 </span>
               </div>
             </div>
 
             {/* =========post here button======= */}
-            <div className="adminPart  flex items-center justify-end gap-4">
+            <div className="adminPart min-w-40 flex items-center justify-end gap-4">
               <button
                 onClick={handlePostBtn}
                 className="bg-slate-300 px-5 py-2 rounded-l-sm rounded-r-3xl font-bold hover:bg-slate-400  hover:text-slate-100 "

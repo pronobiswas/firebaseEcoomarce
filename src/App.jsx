@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import '../src/App.css'
 import {
   createRoutesFromElements,
   createBrowserRouter,
@@ -11,6 +12,7 @@ import SignUp from './Pages/Auth/SignUp';
 import SignIn from './Pages/Auth/SignIn';
 import ItemDetails from './Pages/ItemDetails';
 import UserProfile from './Pages/UserProfile';
+import AllPost from './component/AllPost';
 
 function App() {
 
@@ -21,6 +23,7 @@ function App() {
         <Route element= {<RootLayout/>}>
           <Route path='/signup' element={<SignUp/>} />
           <Route path='/signin' element={<SignIn/>} />
+          <Route path='/allpost' element={<AllPost/>} />
           <Route path='/profile' element={<UserProfile/>} />
           <Route path='/' element={<Homepage/>} />
           <Route path='/post' element={<PostPage/>} />
