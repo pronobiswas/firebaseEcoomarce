@@ -16,12 +16,24 @@ import { HiArrowLongRight } from "react-icons/hi2";
 import BasaVara from "../component/BasaVara.jsx";
 import Decoration from "../component/Decoration.jsx";
 import moment from "moment";
+import { generateToken , messaging } from "../config/firebaseConfigaration.js";
+import { onMessage } from "firebase/messaging";
 
 const Homepage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logInUser = useSelector((state) => state.loggedInUserData.value);
   const [allPosts, setAllPosts] = useState([]);
+
+
+  useEffect(()=>{
+    generateToken();
+    onMessage(messaging , (payload)=>{
+      console.log(payload);
+      
+    })
+
+  },[])
   // ===get data from database=====
   const db = getDatabase();
   useEffect(() => {

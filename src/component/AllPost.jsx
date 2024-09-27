@@ -37,7 +37,11 @@ const AllPost = () => {
       <div className="w-full max-w-[1200px] mx-auto px-1 bg-slate-300 flex">
         <div className="filterMenu w-1/6">
           <h2>filterize your search</h2>
+          <h3>location</h3>
+          <h3>type</h3>
         </div>
+
+
         <div className="allpost w-5/6">
           <h2>All the post are here</h2>
           <div className="w-full flex flex-wrap items-center justify-center gap-2">
