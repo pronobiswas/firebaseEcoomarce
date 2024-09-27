@@ -26,6 +26,7 @@ const PostPage = () => {
       locaion: "",
       decription: "",
       posterId: "",
+      allComments: [],
     },
 
     // validationSchema: Yup.object({

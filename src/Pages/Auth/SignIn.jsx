@@ -47,7 +47,8 @@ const SignIn = () => {
             localStorage.setItem("loggedInUser" , JSON.stringify(user));
             dispatch(loggedInUser(user))
             toast("sign In Successfully");
-            navigate('/')
+            setTimeout(navigate('/'),2000)
+            
           }else{
             toast("verify your mail");
           }
@@ -65,7 +66,7 @@ const SignIn = () => {
     <>
       <ToastContainer
         position="top-right"
-        autoClose={2000}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

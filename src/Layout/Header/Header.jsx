@@ -16,8 +16,6 @@ const Header = () => {
   const logInUser = useSelector((state) => state.loggedInUserData.value);
   const [toggleUserBox, setToggleUserBox] = useState(false);
 
-  
-
   const handletoggleUserBox = () => {
     setToggleUserBox(!toggleUserBox);
   };
@@ -31,10 +29,10 @@ const Header = () => {
     setToggleUserBox(false);
   };
 
-  const handleProfile = ()=>{
+  const handleProfile = () => {
     navigate("/profile");
     setToggleUserBox(false);
-  }
+  };
 
   const handleSignOut = () => {
     signOut(auth)
@@ -50,11 +48,21 @@ const Header = () => {
   };
   return (
     <>
-      
       <header>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
         <nav className="w-full px-1">
           <div className="w-full h-full max-w-[1200px] mx-auto flex flex-col md:flex-row  items-center gap-5 justify-between ">
-
             <div className="logo max-w-[120px] h-14 overflow-hidden">
               <Link to={"/"}>
                 <img src={logo} alt="logo" />
@@ -71,7 +79,11 @@ const Header = () => {
                 <option value="dhaka">Barishal</option>
               </select>
               <div className="searchInput w-full  flex items-center">
-                <input type="text" placeholder="search here" className=" w-full" />
+                <input
+                  type="text"
+                  placeholder="search here"
+                  className=" w-full"
+                />
                 <span className=" text-2xl">
                   <CiSearch />
                 </span>
@@ -94,7 +106,6 @@ const Header = () => {
               >
                 <FaRegUserCircle />
               </div>
-
             </div>
 
             {/* ========user Sign up/In ? signOut box======= */}
@@ -107,7 +118,10 @@ const Header = () => {
                         {logInUser ? logInUser.displayName : "username"}
                       </span>
 
-                      <div onClick={handleProfile} className="w-fit  rounded-full text-2xl mx-auto bg-slate-50 p-2 border-4 border-indigo-400 shadow-inner">
+                      <div
+                        onClick={handleProfile}
+                        className="w-fit  rounded-full text-2xl mx-auto bg-slate-50 p-2 border-4 border-indigo-400 shadow-inner"
+                      >
                         <FaRegUserCircle />
                       </div>
                     </div>
