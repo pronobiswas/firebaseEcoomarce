@@ -47,7 +47,7 @@ const SignIn = () => {
             localStorage.setItem("loggedInUser" , JSON.stringify(user));
             dispatch(loggedInUser(user))
             toast("sign In Successfully");
-            setTimeout(navigate('/'),2000)
+            navigate('/')
             
           }else{
             toast("verify your mail");

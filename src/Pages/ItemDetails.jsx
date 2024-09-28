@@ -48,7 +48,9 @@ const ItemDetails = () => {
           senderemail: logInUser?.email,
           itemId: itemInfo?.id,
           message: reviewInput,
-          date: "",
+          date: `${new Date().getFullYear()}-${
+            new Date().getMonth() + 1
+          }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getMilliseconds()}`,
         }).then(() => {
           setReviewInput("");
           console.log("success");
@@ -63,43 +65,45 @@ const ItemDetails = () => {
 
   return (
     <>
-      <div className="w-full max-w-[1200px] mx-auto px-5  flex gap-8">
+      <div className="w-full max-w-[1200px] mx-auto px-5">
         <ToastContainer />
-        <div className="w-full max-w-80 h-80 flex flex-col items-center justify-center gap-4">
-          <div className="productImage w-full h-52 bg-slate-400 rounded-xl"></div>
-          <div className="productImage w-full shadow-inner p-2 rounded-xl flex gap-2">
-            <div className="w-20 h-20 bg-slate-500 rounded-xl"></div>
-            <div className="w-20 h-20 bg-slate-500 rounded-xl"></div>
-            <div className="w-20 h-20 bg-slate-500 rounded-xl"></div>
-            <div className="w-20 h-20 bg-slate-500 rounded-xl"></div>
+        <div className="w-full flex flex-col gap-5 md:flex-row pt-12 pb-6">
+          <div className="w-full max-w-80 h-80 flex flex-col items-center justify-center gap-4">
+            <div className="productImage w-full h-52 bg-slate-400 rounded-xl"></div>
+            <div className="productImage w-full shadow-inner p-2 rounded-xl flex gap-2">
+              <div className="w-20 h-20 bg-slate-500 rounded-xl"></div>
+              <div className="w-20 h-20 bg-slate-500 rounded-xl"></div>
+              <div className="w-20 h-20 bg-slate-500 rounded-xl"></div>
+              <div className="w-20 h-20 bg-slate-500 rounded-xl"></div>
+            </div>
           </div>
-        </div>
 
-        <div className="w-full">
-          <h1 className="text-xl uppercase">{itemInfo?.username}</h1>
-          <p className="font-bold mt-2">Location</p>
-          <p>{itemInfo?.locaion}</p>
-          <p className="font-bold mt-2">Post Type</p>
-          <p>{itemInfo?.postType}</p>
-          <p>{itemInfo?.subCatagory}</p>
-          <p className="font-bold mt-2">Contact</p>
-          <p className="text-blue-600">
-            <a href={itemInfo?.userEmail}>{itemInfo?.userEmail}</a>
-          </p>
-          <p>{itemInfo?.userPhoneNumber}</p>
-          <p>{itemInfo?.decription}</p>
-          {/* <p>{itemInfo.date}</p> */}
-          <div className="flex gap-5">
-            <button className="bg-slate-600 text-white px-8 py-2 rounded-xl">
-              add to wish list
-            </button>
+          <div className="w-full">
+            <h1 className="text-xl uppercase">{itemInfo?.username}</h1>
+            <p className="font-bold mt-2">Location</p>
+            <p>{itemInfo?.locaion}</p>
+            <p className="font-bold mt-2">Post Type</p>
+            <p>{itemInfo?.postType}</p>
+            <p>{itemInfo?.subCatagory}</p>
+            <p className="font-bold mt-2">Contact</p>
+            <p className="text-blue-600">
+              <a href={itemInfo?.userEmail}>{itemInfo?.userEmail}</a>
+            </p>
+            <p>{itemInfo?.userPhoneNumber}</p>
+            <p>{itemInfo?.decription}</p>
+            {/* <p>{itemInfo.date}</p> */}
+            <div className="flex gap-5 mt-4">
+              <button className="bg-slate-600 text-white px-8 py-2 rounded-xl">
+                add to wish list
+              </button>
 
-            <button
-              onClick={bookNow}
-              className="bg-slate-600 text-white px-8 py-2 rounded-xl                               "
-            >
-              book now
-            </button>
+              <button
+                onClick={bookNow}
+                className="bg-slate-600 text-white px-8 py-2 rounded-xl                               "
+              >
+                book now
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -110,11 +114,14 @@ const ItemDetails = () => {
           <div className="w-full py-3 shadow-inner flex flex-col gap-4">
             {itemReview.map((item) => (
               <div className="flex gap-5">
-                <div className="w-20 h-20 bg-slate-600 rounded-full"></div>
                 <div>
-                  <p>{item.sendername}</p>
+                  <div className="w-20 h-20 bg-slate-600 rounded-full"></div>
+                </div>
+                <div className="w-full">
+                  <p className="font-bold capitalize">{item.sendername}</p>
                   <p>{item.senderemail}</p>
-                  <p>{item.message}</p>
+                  <p className="w-full text-sm text-thin my-1 text-slate-500 ">{item.message}</p>
+                  <p>{item.date}</p>
                 </div>
               </div>
             ))}
