@@ -64,18 +64,6 @@ const SignIn = () => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       <div>
         <h1>this is sign in page</h1>
 

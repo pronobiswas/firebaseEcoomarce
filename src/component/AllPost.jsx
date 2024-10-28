@@ -34,8 +34,9 @@ const AllPost = () => {
 
   return (
     <>
-      <div className="w-full max-w-[1200px] mx-auto px-1 bg-slate-300 flex">
-        <div className="filterMenu w-1/6">
+      <div className="w-full max-w-[1200px] mx-auto px-1 bg-slate-300 flex mt-5">
+
+        <div className="filterMenu w-1/6 hidden md:block">
           <h2 className="text-2xl font-bold">filterize your search</h2>
           <div>
             <h3 className="text-2xl mb-3 mt-2">location</h3>
@@ -66,7 +67,6 @@ const AllPost = () => {
             </div>
           </div>
 
-          {/* =========type========= */}
           <div>
             <h3 className="text-2xl mb-3 mt-2">Post Type</h3>
 
@@ -90,16 +90,16 @@ const AllPost = () => {
               <input type="checkbox" id="service" name="service" />
               <label htmlFor="service">service</label>
             </div>
-
           </div>
 
           <div>
-            <button className="bg-slate-400 px-8 py-1 rounded-lg mt-3">Filter</button>
+            <button className="bg-slate-400 px-8 py-1 rounded-lg mt-3">
+              Filter
+            </button>
           </div>
-
         </div>
 
-        <div className="allpost w-5/6">
+        <div className="allpost w-full md:w-5/6">
           <h2 className="text-2xl font-bold mb-3">All the post are here</h2>
           <div className="w-full flex flex-wrap items-center justify-center gap-2">
             {allPosts.map((item, index) => (

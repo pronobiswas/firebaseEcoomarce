@@ -7,6 +7,12 @@ import {
   sendEmailVerification,
   updateProfile,
 } from "firebase/auth";
+import {
+  getStorage,
+  ref as sref,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +30,7 @@ const SignUp = () => {
       phoneNumber: "",
       fullAddress: "",
       signUpPassword: "",
+      image:"",
     },
     validationSchema: Yup.object({
       signUpMail: Yup.string()
@@ -88,14 +95,15 @@ const SignUp = () => {
         pauseOnHover
         theme="light"
       />
-      <div className="w-full max-w-[1200px] px-5 flex items-center justify-center">
+      <div className="w-full max-w-[1200px] mx-auto px-5 flex items-center justify-center">
         <div className="w-full max-w-[420px]">
           <h1>this is sign Up page</h1>
           <form
             onSubmit={formik.handleSubmit}
-            className="flex flex-col gap-5 w-full"
+            className="flex flex-col gap-5 w-full mb-5"
           >
-            <div className="signupName flex flex-col gap-2 border border-1 border-slate-400 rounded p-2">
+            {/* ======================== */}
+            <div className="signupName bg-slate-100 flex flex-col gap-0 border border-1 border-slate-400 rounded">
               <label htmlFor="signupName">Username</label>
               <input
                 type="text"
@@ -104,6 +112,20 @@ const SignUp = () => {
                 onChange={formik.handleChange}
                 value={formik.values.signupName}
                 placeholder="Enter your userName"
+                className="inputsFild"
+              />
+            </div>
+            {/* ======================== */}
+            <div className="signupName bg-slate-100 flex flex-col gap-0 border border-1 border-slate-400 rounded">
+              <label htmlFor="signupName">Username</label>
+              <input
+                type="text"
+                id="signupName"
+                name="signupName"
+                onChange={formik.handleChange}
+                value={formik.values.signupName}
+                placeholder="Enter your userName"
+                className="p-2"
               />
             </div>
 
@@ -166,13 +188,22 @@ const SignUp = () => {
                 <div>{formik.errors.signUpPassword}</div>
               ) : null}
             </div>
+            <div className="image password flex flex-col gap-2 border border-1 border-slate-400 rounded p-2">
+                <input
+                  type="file"
+                  name="image"
+                  onChange={formik.handleChange}
+                  value={formik.values.image}
+                  accept="image/*"
+                />
+              </div>
             <button type="submit" className="w-full bg-slate-500">
               submit
             </button>
             <div>
               <a href="#">aldery have an account?</a>
 
-              <span className="text-blue-500">
+              <span className="text-blue-500 ml-8">
                 <Link to="/signin">Sign In</Link>
               </span>
             </div>

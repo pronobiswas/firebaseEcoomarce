@@ -61,7 +61,7 @@ const Homepage = () => {
   return (
     <div className="w-full max-w-[1200px] h-full mx-auto flex">
 
-      <div className="filterMenu hidden md:block md:w-1/6  lg:w-1/6  h-full min-h-screen  bg-slate-200 ">
+      <div className="filterMenu hidden md:block md:w-1/6  lg:w-1/6  h-full min-h-screen  bg-slate-200 px-2">
         <h2 className="text-2xl">the filter</h2>
         <div>
           <details>
@@ -144,7 +144,7 @@ const Homepage = () => {
         <Decoration />
       </div>
 
-      <div className="adversmentSection w-1/6 hidden lg:block h-full min-h-[600px] bg-slate-500">
+      <div className="adversmentSection w-1/6 hidden lg:block h-full min-h-[600px] bg-slate-500 px-2">
         <h2>the addversment</h2>
       </div>
     </div>

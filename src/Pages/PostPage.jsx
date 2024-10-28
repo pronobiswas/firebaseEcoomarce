@@ -5,6 +5,12 @@ import firebaseConfig from "../config/firebaseConfigaration";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getDatabase, ref, set, push } from "firebase/database";
+import {
+  getStorage,
+  ref as sref,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import moment from "moment/moment";
@@ -18,6 +24,7 @@ const PostPage = () => {
     "^[A-Za-z0-9](([a-zA-Z0-9,=.!-#|$%^&*+/?_`{}~]+)*)@(?:[0-9a-zA-Z-]+.)+[a-zA-Z]{2,9}$";
   const formik = useFormik({
     initialValues: {
+      image: "",
       username: "",
       userEmail: "",
       userPhoneNumber: "",
@@ -29,33 +36,26 @@ const PostPage = () => {
       allComments: [],
     },
 
-    // validationSchema: Yup.object({
+    validationSchema: Yup.object({
+      username: Yup.string()
+        .max(12, " username max 12 charecter")
+        .required("Required"),
 
-    //   username: Yup.string()
-    //   .max(12,' username max 12 charecter')
-    //   .required('Required'),
+      userEmail: Yup.string()
+        .email("Invalid email address")
+        .matches(emailRegx, "Enter Your Full mail")
+        .required("Required"),
 
-    //   userEmail: Yup.string()
-    //   .email('Invalid email address')
-    //   .matches(emailRegx , "Enter Your Full mail")
-    //   .required('Required'),
+      postType: Yup.string().required("Required"),
 
-    // userPhoneNumber: Yup.string()
-    //   .userPhoneNumber('Invalid userPhoneNumber')
-    //   .required('Required'),
+      locaion: Yup.string()
+        .max(12, " you must enter your location")
+        .required("Required"),
 
-    //   postType: Yup.string()
-    //   .required('Required'),
-
-    //   locaion: Yup.string()
-    //   .max(12,' you must enter your location')
-    //   .required('Required'),
-
-    //   decription: Yup.string()
-    //   .max(220,' you must enter your decription')
-    //   .required('Required'),
-
-    // }),
+      decription: Yup.string()
+        .max(220, " you must enter your decription")
+        .required("Required"),
+    }),
 
     onSubmit: (values, actions, e) => {
       console.log(values);
@@ -112,6 +112,9 @@ const PostPage = () => {
                   value={formik.values.userEmail}
                   placeholder="Enter your Email"
                 />
+                {formik.touched.userEmail && formik.errors.userEmail ? (
+                  <div>{formik.errors.userEmail}</div>
+                ) : null}
               </div>
 
               <div className="userPhonenumber inputBox">
@@ -206,6 +209,17 @@ const PostPage = () => {
                     <option value="Nursing">Nursing</option>
                   </select>
                 ) : null}
+              </div>
+              <div className="image inputBox">
+                <label htmlFor="image">Post image</label>
+                <input
+                  type="file"
+                  name="image"
+                  id="image"
+                  onChange={formik.handleChange}
+                  value={formik.values.image}
+                  placeholder="Enter your full Location"
+                />
               </div>
               <div className="locaion inputBox">
                 <label htmlFor="locaion">Your location</label>

@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 import { CiSearch } from "react-icons/ci";
 import { FaRegUserCircle } from "react-icons/fa";
+import { GiTireIronCross } from "react-icons/gi";
 
 const Header = () => {
   const auth = getAuth();
@@ -113,9 +114,13 @@ const Header = () => {
               <div className="absolute top-14 right-2 rounded-2xl overflow-hidden shadow-md">
                 <div className="userControlBox w-60 h-60 bg-slate-200">
                   <div className="userControlBoxHeader w-full h-14 bg-slate-300 pt-3">
-                    <div className="avatar text-center">
+                    <div className="avatar text-center relative">
+                      {/* ==profile card er cros==  */}
+                      <span onClick={handletoggleUserBox} className="absolute md:hidden text-[10px] top-[-10px] right-0 px-2 py-2 rounded-full bg-red-300 text-red-700 border-2 border-red-500"><GiTireIronCross />
+                      </span>
+                      {/* ==username== */}
                       <span>
-                        {logInUser ? logInUser.displayName : "username"}
+                        {logInUser ? logInUser?.displayName : "Guest"}
                       </span>
 
                       <div

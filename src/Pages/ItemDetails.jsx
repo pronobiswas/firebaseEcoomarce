@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { loggedInUser } from "../Features/AuthSlice";
 import { toast, ToastContainer } from "react-toastify";
+import moment from "moment";
 
 const ItemDetails = () => {
   const db = getDatabase();
@@ -50,7 +51,7 @@ const ItemDetails = () => {
           message: reviewInput,
           date: `${new Date().getFullYear()}-${
             new Date().getMonth() + 1
-          }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getMilliseconds()}`,
+          }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}`,
         }).then(() => {
           setReviewInput("");
           console.log("success");
@@ -121,7 +122,7 @@ const ItemDetails = () => {
                   <p className="font-bold capitalize">{item.sendername}</p>
                   <p>{item.senderemail}</p>
                   <p className="w-full text-sm text-thin my-1 text-slate-500 ">{item.message}</p>
-                  <p>{item.date}</p>
+                  <p>{moment(item.date, "YYYYMMDD hh:mm").fromNow()}</p>
                 </div>
               </div>
             ))}
