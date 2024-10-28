@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, useFormik } from "formik";
 import * as Yup from "yup";
 import firebaseConfig from "../config/firebaseConfigaration";
@@ -14,14 +14,36 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import moment from "moment/moment";
+import { useCallback } from "react";
 
 const PostPage = () => {
   const db = getDatabase();
   const navigate = useNavigate();
   const logInUser = useSelector((state) => state.loggedInUserData.value);
-
   const emailRegx =
     "^[A-Za-z0-9](([a-zA-Z0-9,=.!-#|$%^&*+/?_`{}~]+)*)@(?:[0-9a-zA-Z-]+.)+[a-zA-Z]{2,9}$";
+  
+  const [imageUrl, setImageUrl] = useState("");
+  const [image, setImage] = useState("");
+
+  const handleInput = (e) => {
+    setImage(e.target.files[0]);
+  };
+  const subitBtn = useCallback(() => {
+    console.log("file upload controler");
+
+    const db = getDatabase();
+    const storage = getStorage();
+    const imageStorageRef = sref(storage, "img/" + image.name);
+    uploadBytes(imageStorageRef, image).then((snapshot) => {
+      getDownloadURL(imageStorageRef).then((downloadURL) => {
+        setImageUrl(downloadURL)
+      });
+    });
+    console.log(imageUrl);
+    
+  },[image])
+
   const formik = useFormik({
     initialValues: {
       image: "",
@@ -45,22 +67,12 @@ const PostPage = () => {
         .email("Invalid email address")
         .matches(emailRegx, "Enter Your Full mail")
         .required("Required"),
-
-      postType: Yup.string().required("Required"),
-
-      locaion: Yup.string()
-        .max(12, " you must enter your location")
-        .required("Required"),
-
-      decription: Yup.string()
-        .max(220, " you must enter your decription")
-        .required("Required"),
     }),
 
+    // ===========form submit========
     onSubmit: (values, actions, e) => {
-      console.log(values);
-
       set(push(ref(db, "allpost/")), {
+        image: "",
         username: values.username,
         userEmail: values.userEmail,
         userPhoneNumber: values.userPhoneNumber,
@@ -68,13 +80,13 @@ const PostPage = () => {
         subCatagory: values.subCatagory,
         locaion: values.locaion,
         decription: values.decription,
-        profile_picture: "imageUrl/img/img.png",
+        profile_picture: values.image,
         posterId: logInUser.uid,
         date: `${new Date().getFullYear()}-${
           new Date().getMonth() + 1
         }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getMilliseconds()}`,
       }).then(() => {
-        console.log("datacreate successsfully");
+        console.log("data create successsfully");
         toast("post successfully");
         navigate("/");
       });
@@ -216,9 +228,8 @@ const PostPage = () => {
                   type="file"
                   name="image"
                   id="image"
-                  onChange={formik.handleChange}
-                  value={formik.values.image}
-                  placeholder="Enter your full Location"
+                  onChange={handleInput}
+                  accept="image/*"
                 />
               </div>
               <div className="locaion inputBox">
@@ -246,6 +257,7 @@ const PostPage = () => {
             <button
               className="bg-blue-300 mt-5 px-12 py-2 font-semibold text-xl rounded-xl hover:bg-blue-500 hover:text-white"
               type="submit"
+              onClick={subitBtn}
             >
               Post
             </button>
