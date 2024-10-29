@@ -16,7 +16,7 @@ import { HiArrowLongRight } from "react-icons/hi2";
 import BasaVara from "../component/BasaVara.jsx";
 import Decoration from "../component/Decoration.jsx";
 import moment from "moment";
-import { generateToken , messaging } from "../config/firebaseConfigaration.js";
+import { generateToken, messaging } from "../config/firebaseConfigaration.js";
 import { onMessage } from "firebase/messaging";
 
 const Homepage = () => {
@@ -25,15 +25,12 @@ const Homepage = () => {
   const logInUser = useSelector((state) => state.loggedInUserData.value);
   const [allPosts, setAllPosts] = useState([]);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     generateToken();
-    onMessage(messaging , (payload)=>{
+    onMessage(messaging, (payload) => {
       console.log(payload);
-      
-    })
-
-  },[])
+    });
+  }, []);
   // ===get data from database=====
   const db = getDatabase();
   useEffect(() => {
@@ -60,7 +57,6 @@ const Homepage = () => {
 
   return (
     <div className="w-full max-w-[1200px] h-full mx-auto flex">
-
       <div className="filterMenu hidden md:block md:w-1/6  lg:w-1/6  h-full min-h-screen  bg-slate-200 px-2">
         <h2 className="text-2xl">the filter</h2>
         <div>
@@ -128,10 +124,11 @@ const Homepage = () => {
                 <SwiperSlide key={index}>
                   <div onClick={() => handleItem(item)}>
                     <PostCard
-                      title={item.username}
-                      catagory={item.postType}
+                      src={item.picture}
+                      title={item.userName}
+                      catagory={item.PostType}
                       location={item.location}
-                      description={item.decription}
+                      description={item.Decription}
                       Date={moment(item.date, "YYYYMMDD hh:mm").fromNow()}
                     />
                   </div>

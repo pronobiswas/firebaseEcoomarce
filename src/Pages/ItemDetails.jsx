@@ -37,7 +37,7 @@ const ItemDetails = () => {
 
   const bookNow = () => {
     console.log("book now");
-    console.log(itemReview);
+    console.log(itemInfo);
   };
 
   const handleSubmitReview = () => {
@@ -70,7 +70,9 @@ const ItemDetails = () => {
         <ToastContainer />
         <div className="w-full flex flex-col gap-5 md:flex-row pt-12 pb-6">
           <div className="w-full max-w-80 h-80 flex flex-col items-center justify-center gap-4">
-            <div className="productImage w-full h-52 bg-slate-400 rounded-xl"></div>
+            <div className="productImage w-full h-52 bg-slate-400 rounded-xl">
+              <img src={itemInfo.picture} alt="image" className="w-full h-full object-cover" />
+            </div>
             <div className="productImage w-full shadow-inner p-2 rounded-xl flex gap-2">
               <div className="w-20 h-20 bg-slate-500 rounded-xl"></div>
               <div className="w-20 h-20 bg-slate-500 rounded-xl"></div>
@@ -80,18 +82,18 @@ const ItemDetails = () => {
           </div>
 
           <div className="w-full">
-            <h1 className="text-xl uppercase">{itemInfo?.username}</h1>
+            <h1 className="text-xl uppercase">{itemInfo?.userName}</h1>
             <p className="font-bold mt-2">Location</p>
-            <p>{itemInfo?.locaion}</p>
+            <p>{itemInfo?.Locaion}</p>
             <p className="font-bold mt-2">Post Type</p>
-            <p>{itemInfo?.postType}</p>
-            <p>{itemInfo?.subCatagory}</p>
+            <p>{itemInfo?.PostType}</p>
+            <p>{itemInfo?.SubCatagory}</p>
             <p className="font-bold mt-2">Contact</p>
             <p className="text-blue-600">
-              <a href={itemInfo?.userEmail}>{itemInfo?.userEmail}</a>
+              <a href={itemInfo?.Email}>{itemInfo?.Email}</a>
             </p>
-            <p>{itemInfo?.userPhoneNumber}</p>
-            <p>{itemInfo?.decription}</p>
+            <p>{itemInfo?.PhoneNumber}</p>
+            <p>{itemInfo?.Decription}</p>
             {/* <p>{itemInfo.date}</p> */}
             <div className="flex gap-5 mt-4">
               <button className="bg-slate-600 text-white px-8 py-2 rounded-xl">
@@ -121,7 +123,9 @@ const ItemDetails = () => {
                 <div className="w-full">
                   <p className="font-bold capitalize">{item.sendername}</p>
                   <p>{item.senderemail}</p>
-                  <p className="w-full text-sm text-thin my-1 text-slate-500 ">{item.message}</p>
+                  <p className="w-full text-sm text-thin my-1 text-slate-500 ">
+                    {item.message}
+                  </p>
                   <p>{moment(item.date, "YYYYMMDD hh:mm").fromNow()}</p>
                 </div>
               </div>

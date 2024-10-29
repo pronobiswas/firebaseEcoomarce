@@ -1,11 +1,14 @@
 import React from 'react'
 
-const PostCard = ({title , catagory , location ,description,Date}) => {
+const PostCard = ({title , src,catagory , location ,description,Date}) => {
   return (
     <div>
       <div className="postCard w-44 rounded-md bg-slate-200 px-2 py-4 overflow-hidden ">
         <div className="postImage w-full h-32 bg-red-400">
-
+          <img 
+          src={src} 
+          alt="img"
+          className='w-full h-full object-cover' />
         </div>
         <h3>{title}</h3>
         <h4> {catagory}</h4>

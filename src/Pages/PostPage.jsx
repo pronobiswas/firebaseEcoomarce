@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import { Formik, useFormik } from "formik";
-import * as Yup from "yup";
-import firebaseConfig from "../config/firebaseConfigaration";
 import { useSelector, useDispatch } from "react-redux";
-
 import { getDatabase, ref, set, push } from "firebase/database";
 import {
   getStorage,
@@ -11,143 +7,127 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
+import { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import moment from "moment/moment";
-import { useCallback } from "react";
+
 
 const PostPage = () => {
   const db = getDatabase();
-  const navigate = useNavigate();
+  const storage = getStorage();
   const logInUser = useSelector((state) => state.loggedInUserData.value);
   const emailRegx =
     "^[A-Za-z0-9](([a-zA-Z0-9,=.!-#|$%^&*+/?_`{}~]+)*)@(?:[0-9a-zA-Z-]+.)+[a-zA-Z]{2,9}$";
-  
+
+  const [image, setimage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [image, setImage] = useState("");
-
-  const handleInput = (e) => {
-    setImage(e.target.files[0]);
+  const [inputValues, setInputValues] = useState({
+    username: "",
+    userEmail: "",
+    userPhoneNumber: "",
+    postType: "",
+    subCatagory: "",
+    locaion: "",
+    decription: "",
+  });
+  // ====handle Image======
+  const handleImage = (e) => {
+    if (e.target.files[0]) {
+      setimage(e.target.files[0]);
+    }
+    console.log(image);
+    
   };
-  const subitBtn = useCallback(() => {
-    console.log("file upload controler");
+  // ==handle Input======
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    setInputValues((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    console.log(inputValues);
+  };
+  // =====handle submit=====
+  const handleSubmit = useCallback((e) => {
+    e.preventDefault();
+    console.log(image);
+    console.log(inputValues);
+    
 
-    const db = getDatabase();
-    const storage = getStorage();
-    const imageStorageRef = sref(storage, "img/" + image.name);
+    const imageStorageRef = sref(storage, "testimg/" + image.name);
     uploadBytes(imageStorageRef, image).then((snapshot) => {
       getDownloadURL(imageStorageRef).then((downloadURL) => {
-        setImageUrl(downloadURL)
+        setImageUrl(downloadURL);
+        set(push(ref(db, "allpost/")), {
+          profile_picture: imageUrl,
+          picture: downloadURL,
+          userName: inputValues.username,
+          Email: inputValues.userEmail,
+          PhoneNumber: inputValues.userPhoneNumber,
+          PostType: inputValues.postType,
+          SubCatagory: inputValues.subCatagory,
+          Locaion: inputValues.locaion,
+          Decription: inputValues.decription,
+          posterId: logInUser.uid,
+
+          date: `${new Date().getFullYear()}-${
+            new Date().getMonth() + 1
+          }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getMilliseconds()}`,
+        }).then(() => {
+          console.log("datacreate successsfully");
+        });
       });
     });
     console.log(imageUrl);
-    
-  },[image])
-
-  const formik = useFormik({
-    initialValues: {
-      image: "",
-      username: "",
-      userEmail: "",
-      userPhoneNumber: "",
-      subCatagory: "",
-      postType: "",
-      locaion: "",
-      decription: "",
-      posterId: "",
-      allComments: [],
-    },
-
-    validationSchema: Yup.object({
-      username: Yup.string()
-        .max(12, " username max 12 charecter")
-        .required("Required"),
-
-      userEmail: Yup.string()
-        .email("Invalid email address")
-        .matches(emailRegx, "Enter Your Full mail")
-        .required("Required"),
-    }),
-
-    // ===========form submit========
-    onSubmit: (values, actions, e) => {
-      set(push(ref(db, "allpost/")), {
-        image: "",
-        username: values.username,
-        userEmail: values.userEmail,
-        userPhoneNumber: values.userPhoneNumber,
-        postType: values.postType,
-        subCatagory: values.subCatagory,
-        locaion: values.locaion,
-        decription: values.decription,
-        profile_picture: values.image,
-        posterId: logInUser.uid,
-        date: `${new Date().getFullYear()}-${
-          new Date().getMonth() + 1
-        }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getMilliseconds()}`,
-      }).then(() => {
-        console.log("data create successsfully");
-        toast("post successfully");
-        navigate("/");
-      });
-    },
-  });
+  }, [inputValues]);
   return (
     <>
-      <div className="w-full max-w-[1200px] mx-auto px-5 text-center">
-        <h2 className="text-2xl mb-5">post your service with aquerecy</h2>
-        <div className="bg-slate-200 w-full max-w-[480px] mx-auto px-5 py-8 rounded-2xl">
-          <form className="" onSubmit={formik.handleSubmit}>
+      <div className="w-full">
+        <div className="formWarpper max-w-80 mx-auto">
+          <form className="">
             <div className="flex flex-col gap-4">
+              {/* =====userName====== */}
               <div className="username inputBox">
                 <label htmlFor="username">Your Name</label>
                 <input
                   type="text"
                   id="username"
                   name="username"
-                  onChange={formik.handleChange}
-                  value={formik.values.username}
+                  onChange={handleInput}
                   placeholder="Enter your full Name"
                 />
-                {formik.touched.username && formik.errors.username ? (
-                  <div>{formik.errors.username}</div>
-                ) : null}
               </div>
-
+              {/* ====email===== */}
               <div className="userEmail inputBox">
                 <label htmlFor="userEmail">Your email</label>
                 <input
                   type="email"
                   id="userEmail"
                   name="userEmail"
-                  onChange={formik.handleChange}
-                  value={formik.values.userEmail}
                   placeholder="Enter your Email"
+                  onChange={handleInput}
                 />
-                {formik.touched.userEmail && formik.errors.userEmail ? (
-                  <div>{formik.errors.userEmail}</div>
-                ) : null}
               </div>
-
+              {/* ===phone number===== */}
               <div className="userPhonenumber inputBox">
-                <label htmlFor="userEmail">Your Phone number</label>
+                <label htmlFor="userPhoneNumber">Your Phone number</label>
                 <input
-                  type="phone"
+                  type="text"
                   id="userPhoneNumber"
                   name="userPhoneNumber"
-                  onChange={formik.handleChange}
-                  value={formik.values.userPhoneNumber}
                   placeholder="Enter Your Phone number"
+                  onChange={handleInput}
                 />
               </div>
-
+              {/* ====post Type===== */}
               <div className="postType inputBox flex flex-row justify-between gap-5">
                 <select
                   className="w-full"
                   name="postType"
                   id="postType"
-                  onChange={formik.handleChange}
-                  value={formik.values.postType}
+                  onChange={handleInput}
+                  value={inputValues.postType}
                 >
                   <option value="basaVara">basa vara</option>
                   <option value="gariVara">gari vara</option>
@@ -156,12 +136,11 @@ const PostPage = () => {
                   <option value="Services">Services</option>
                 </select>
 
-                {formik.values.postType == "basaVara" ? (
+                {inputValues.postType == "basaVara" ? (
                   <select
                     name="subCatagory"
                     id="subCatagory"
-                    onChange={formik.handleChange}
-                    value={formik.values.subCatagory}
+                    onChange={handleInput}
                   >
                     <option value="Family">Family</option>
                     <option value="Bachelor">Bachelor</option>
@@ -170,12 +149,12 @@ const PostPage = () => {
                   </select>
                 ) : null}
                 {/* =======subcatagory gariVara=========== */}
-                {formik.values.postType == "gariVara" ? (
+                {inputValues.postType == "gariVara" ? (
                   <select
                     name="subCatagory"
                     id="subCatagory"
-                    onChange={formik.handleChange}
-                    value={formik.values.subCatagory}
+                    onChange={handleInput}
+                    value={inputValues.subCatagory}
                   >
                     <option value="BusAndTruck">BusAndTruck</option>
                     <option value="MotorCycle">MotorCycle</option>
@@ -183,12 +162,12 @@ const PostPage = () => {
                   </select>
                 ) : null}
                 {/* =======subcatagory SHOP=========== */}
-                {formik.values.postType == "Shop" ? (
+                {inputValues.postType == "Shop" ? (
                   <select
                     name="subCatagory"
                     id="subCatagory"
-                    onChange={formik.handleChange}
-                    value={formik.values.subCatagory}
+                    onChange={handleInput}
+                    value={inputValues.subCatagory}
                   >
                     <option value="StoreAndShowroom">StoreAndShowroom</option>
                     <option value="GoDown">GoDown</option>
@@ -197,24 +176,24 @@ const PostPage = () => {
                   </select>
                 ) : null}
                 {/* =======subcatagory Decoration=========== */}
-                {formik.values.postType == "Decoration" ? (
+                {inputValues.postType == "Decoration" ? (
                   <select
                     name="subCatagory"
                     id="subCatagory"
-                    onChange={formik.handleChange}
-                    value={formik.values.subCatagory}
+                    onChange={handleInput}
+                    value={inputValues.subCatagory}
                   >
                     <option value="InDoor">InDoor</option>
                     <option value="OutDoor">OutDoor</option>
                   </select>
                 ) : null}
                 {/* =======subcatagory Decoration=========== */}
-                {formik.values.postType == "Services" ? (
+                {inputValues.postType == "Services" ? (
                   <select
                     name="subCatagory"
                     id="subCatagory"
-                    onChange={formik.handleChange}
-                    value={formik.values.subCatagory}
+                    onChange={handleInput}
+                    value={inputValues.subCatagory}
                   >
                     <option value="Daining">Daining</option>
                     <option value="Tiutor">Tiutor</option>
@@ -222,42 +201,42 @@ const PostPage = () => {
                   </select>
                 ) : null}
               </div>
+              {/* =====Images====== */}
               <div className="image inputBox">
                 <label htmlFor="image">Post image</label>
                 <input
                   type="file"
                   name="image"
                   id="image"
-                  onChange={handleInput}
                   accept="image/*"
+                  onChange={handleImage}
                 />
               </div>
+              {/* =====location====== */}
               <div className="locaion inputBox">
                 <label htmlFor="locaion">Your location</label>
                 <input
                   type="text"
                   id="locaion"
                   name="locaion"
-                  onChange={formik.handleChange}
-                  value={formik.values.locaion}
                   placeholder="Enter your full Location"
+                  onChange={handleInput}
                 />
               </div>
+              {/* ====description==== */}
               <div className="decription inputBox">
                 <label htmlFor="decription">Post Description</label>
                 <textarea
                   name="decription"
                   id="decription"
-                  onChange={formik.handleChange}
-                  value={formik.values.decription}
                   placeholder="Enter your full Location"
+                  onChange={handleInput}
                 ></textarea>
               </div>
             </div>
             <button
               className="bg-blue-300 mt-5 px-12 py-2 font-semibold text-xl rounded-xl hover:bg-blue-500 hover:text-white"
-              type="submit"
-              onClick={subitBtn}
+              onClick={handleSubmit}
             >
               Post
             </button>
