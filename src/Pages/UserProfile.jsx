@@ -115,7 +115,6 @@ const UserProfile = () => {
                 <h4 className="text-4xl font-bold">{logInUser.displayName}</h4>
                 <p>{logInUser.email}</p>
               </div>
-              <UploadImage />
               <div className="image_file_wrapper">
                 <input
                   type="file"

@@ -13,6 +13,7 @@ import SignIn from './Pages/Auth/SignIn';
 import ItemDetails from './Pages/ItemDetails';
 import UserProfile from './Pages/UserProfile';
 import AllPost from './component/AllPost';
+import DraftComponent from './component/DraftComponent';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route path='/profile' element={<UserProfile/>} />
           <Route path='/' element={<Homepage/>} />
           <Route path='/post' element={<PostPage/>} />
+          <Route path='/draft' element={<DraftComponent/>} />
           <Route path='/itemDetails' element={<ItemDetails/>} />
         </Route>
       </>
