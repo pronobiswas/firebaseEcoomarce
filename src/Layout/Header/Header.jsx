@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loggedInUser } from "../../Features/AuthSlice.js";
 import { getAuth, signOut } from "firebase/auth";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { CiSearch } from "react-icons/ci";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -50,7 +51,7 @@ const Header = () => {
   return (
     <>
       <header>
-      
+      <ToastContainer />
         <nav className="w-full px-1">
           <div className="w-full h-full max-w-[1200px] relative mx-auto flex flex-col md:flex-row  items-center gap-5 justify-between ">
             <div className="logo max-w-[120px] h-14 overflow-hidden">
@@ -105,7 +106,11 @@ const Header = () => {
                   <div className="userControlBoxHeader w-full h-14 bg-slate-300 pt-3">
                     <div className="avatar text-center relative">
                       {/* ==profile card er cros==  */}
-                      <span onClick={handletoggleUserBox} className="absolute md:hidden text-[10px] top-[-10px] right-0 px-2 py-2 rounded-full bg-red-300 text-red-700 border-2 border-red-500"><GiTireIronCross />
+                      <span
+                        onClick={handletoggleUserBox}
+                        className="absolute md:hidden text-[10px] top-[-10px] right-0 px-2 py-2 rounded-full bg-red-300 text-red-700 border-2 border-red-500"
+                      >
+                        <GiTireIronCross />
                       </span>
                       {/* ==username== */}
                       <span>
