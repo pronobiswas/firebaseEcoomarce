@@ -50,20 +50,9 @@ const Header = () => {
   return (
     <>
       <header>
-      <ToastContainer
-        position="top-right"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      
         <nav className="w-full px-1">
-          <div className="w-full h-full max-w-[1200px] mx-auto flex flex-col md:flex-row  items-center gap-5 justify-between ">
+          <div className="w-full h-full max-w-[1200px] relative mx-auto flex flex-col md:flex-row  items-center gap-5 justify-between ">
             <div className="logo max-w-[120px] h-14 overflow-hidden">
               <Link to={"/"}>
                 <img src={logo} alt="logo" />

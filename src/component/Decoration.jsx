@@ -25,7 +25,7 @@ const Decoration = () => {
       // =====convert alldata object into an array======
       let DecorationData = [];
       snapshot.forEach((item) => {
-        if (item.val().postType == "Decoration") {
+        if (item.val().PostType == "Decoration") {
             DecorationData.push({ ...item.val(), id: item.key });
         }
       });
@@ -61,10 +61,11 @@ const Decoration = () => {
             <SwiperSlide key={index}>
               <div key={index} onClick={() => handleItem(item)}>
                 <PostCard
-                  title={item.username}
-                  catagory={item.postType}
-                  location={item.location}
-                  description={item.decription}
+                src={item.picture}
+                  title={item.userName}
+                  catagory={item.PostType}
+                  location={item.Location}
+                  description={item.Decription}
                   Date={moment(item.date, "YYYYMMDD hh:mm").fromNow()}
                 />
               </div>

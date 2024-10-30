@@ -134,15 +134,15 @@ const UserProfile = () => {
                 >
                   <div className="flex gap-6">
                     <div className="postimage w-20 h-20 bg-slate-500">
-                      <img src="#" alt="" />
+                      <img src={item.picture} alt="pic" className="w-full h-full object-cover"/>
                     </div>
                     <div>
-                      <p>{item.postType}</p>
-                      <p>{item.subCatagory}</p>
-                      <p>{item.locaion}</p>
+                      <p>{item.PostType}</p>
+                      <p>{item.SubCatagory}</p>
+                      <p>{item.Locaion}</p>
                     </div>
                   </div>
-                  <p>{item.decription}</p>
+                  <p>{item.Decription}</p>
                   <div>
                     <button
                       onClick={() => handleDelete(item)}

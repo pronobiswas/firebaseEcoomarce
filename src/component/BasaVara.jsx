@@ -25,7 +25,7 @@ const BasaVara = () => {
       // =====convert alldata object into an array======
       let BasaData = [];
       snapshot.forEach((item) => {
-        if (item.val().postType == "basaVara") {
+        if (item.val().PostType == "basaVara") {
           BasaData.push({ ...item.val(), id: item.key });
         }
       });
@@ -61,10 +61,11 @@ const BasaVara = () => {
             <SwiperSlide key={index}>
               <div  onClick={() => handleItem(item)}>
                 <PostCard
-                  title={item.username}
-                  catagory={item.postType}
-                  location={item.location}
-                  description={item.decription}
+                src={item.picture}
+                  title={item.userName}
+                  catagory={item.PostType}
+                  location={item.Location}
+                  description={item.Decription}
                   Date={moment(item.date, "YYYYMMDD hh:mm").fromNow()}
                 />
               </div>
