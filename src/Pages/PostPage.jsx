@@ -9,16 +9,15 @@ import {
 } from "firebase/storage";
 import { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import moment from "moment/moment";
-
 
 const PostPage = () => {
   const db = getDatabase();
   const storage = getStorage();
   const logInUser = useSelector((state) => state.loggedInUserData.value);
-  const emailRegx =
-    "^[A-Za-z0-9](([a-zA-Z0-9,=.!-#|$%^&*+/?_`{}~]+)*)@(?:[0-9a-zA-Z-]+.)+[a-zA-Z]{2,9}$";
+  const emailRegx ="^[A-Za-z0-9](([a-zA-Z0-9,=.!-#|$%^&*+/?_`{}~]+)*)@(?:[0-9a-zA-Z-]+.)+[a-zA-Z]{2,9}$";
+  const navigate = useNavigate();
 
   const [image, setimage] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -37,7 +36,6 @@ const PostPage = () => {
       setimage(e.target.files[0]);
     }
     console.log(image);
-    
   };
   // ==handle Input======
   const handleInput = (e) => {
@@ -49,38 +47,41 @@ const PostPage = () => {
     console.log(inputValues);
   };
   // =====handle submit=====
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    console.log(image);
-    console.log(inputValues);
-    
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      console.log(image);
+      console.log(inputValues);
 
-    const imageStorageRef = sref(storage, "testimg/" + image.name);
-    uploadBytes(imageStorageRef, image).then((snapshot) => {
-      getDownloadURL(imageStorageRef).then((downloadURL) => {
-        setImageUrl(downloadURL);
-        set(push(ref(db, "allpost/")), {
-          profile_picture: imageUrl,
-          picture: downloadURL,
-          userName: inputValues.username,
-          Email: inputValues.userEmail,
-          PhoneNumber: inputValues.userPhoneNumber,
-          PostType: inputValues.postType,
-          SubCatagory: inputValues.subCatagory,
-          Locaion: inputValues.locaion,
-          Decription: inputValues.decription,
-          posterId: logInUser.uid,
+      const imageStorageRef = sref(storage, "testimg/" + image.name);
+      uploadBytes(imageStorageRef, image).then((snapshot) => {
+        getDownloadURL(imageStorageRef).then((downloadURL) => {
+          setImageUrl(downloadURL);
+          set(push(ref(db, "allpost/")), {
+            profile_picture: imageUrl,
+            picture: downloadURL,
+            userName: inputValues.username,
+            Email: inputValues.userEmail,
+            PhoneNumber: inputValues.userPhoneNumber,
+            PostType: inputValues.postType,
+            SubCatagory: inputValues.subCatagory,
+            Locaion: inputValues.locaion,
+            Decription: inputValues.decription,
+            posterId: logInUser.uid,
 
-          date: `${new Date().getFullYear()}-${
-            new Date().getMonth() + 1
-          }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getMilliseconds()}`,
-        }).then(() => {
-          console.log("datacreate successsfully");
+            date: `${new Date().getFullYear()}-${
+              new Date().getMonth() + 1
+            }-${new Date().getDate()} ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getMilliseconds()}`,
+          }).then(() => {
+            toast("post successfully");
+            navigate("/");
+          });
         });
       });
-    });
-    console.log(imageUrl);
-  }, [inputValues]);
+      console.log(imageUrl);
+    },
+    [inputValues,image]
+  );
   return (
     <>
       <div className="w-full">

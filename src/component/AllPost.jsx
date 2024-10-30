@@ -105,10 +105,11 @@ const AllPost = () => {
             {allPosts.map((item, index) => (
               <div key={index} onClick={() => handleItem(item)}>
                 <PostCard
-                  title={item.username}
-                  catagory={item.postType}
-                  location={item.location}
-                  description={item.decription}
+                src={item.picture}
+                  title={item.userName}
+                  catagory={item.PostType}
+                  location={item.Location}
+                  description={item.Decription}
                   Date={moment(item.date, "YYYYMMDD hh:mm").fromNow()}
                 />
               </div>
