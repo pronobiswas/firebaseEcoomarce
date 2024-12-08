@@ -26,10 +26,10 @@ function App() {
           <Route path='/signin' element={<SignIn/>} />
           <Route path='/allpost' element={<AllPost/>} />
           <Route path='/profile' element={<UserProfile/>} />
-          <Route path='/' element={<Homepage/>} />
-          <Route path='/post' element={<PostPage/>} />
-          <Route path='/draft' element={<DraftComponent/>} />
-          <Route path='/itemDetails' element={<ItemDetails/>} />
+          <Route path='/' element={<Homepage/>}/>
+          <Route path='/post' element={<PostPage/>}/>
+          <Route path='/draft' element={<DraftComponent/>}/>
+          <Route path='/itemDetails' element={<ItemDetails/>}/>
         </Route>
       </>
     )

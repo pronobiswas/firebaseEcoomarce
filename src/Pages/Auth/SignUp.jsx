@@ -28,9 +28,8 @@ const SignUp = () => {
       signupName: "",
       signUpMail: "",
       phoneNumber: "",
-      fullAddress: "",
       signUpPassword: "",
-      image:"",
+      image: "",
     },
     validationSchema: Yup.object({
       signUpMail: Yup.string()
@@ -59,7 +58,6 @@ const SignUp = () => {
             updateProfile(auth.currentUser, {
               displayName: values.signupName,
               telePhone: values.phoneNumber,
-              address: values.fullAddress,
               photoURL: "https://example.com/user/profile.jpg",
             }).then(() => {
               console.log("Regestetion successfull");
@@ -97,13 +95,13 @@ const SignUp = () => {
       />
       <div className="w-full max-w-[1200px] mx-auto px-5 flex items-center justify-center">
         <div className="w-full max-w-[420px]">
-          <h1>this is sign Up page</h1>
+          
           <form
             onSubmit={formik.handleSubmit}
             className="flex flex-col gap-5 w-full mb-5"
           >
             {/* ======================== */}
-            <div className="signupName bg-slate-100 flex flex-col gap-0 border border-1 border-slate-400 rounded">
+            {/* <div className="signupName bg-slate-100 flex flex-col gap-0 border border-1 border-slate-400 rounded">
               <label htmlFor="signupName">Username</label>
               <input
                 type="text"
@@ -114,7 +112,7 @@ const SignUp = () => {
                 placeholder="Enter your userName"
                 className="inputsFild"
               />
-            </div>
+            </div> */}
             {/* ======================== */}
             <div className="signupName bg-slate-100 flex flex-col gap-0 border border-1 border-slate-400 rounded">
               <label htmlFor="signupName">Username</label>
@@ -159,21 +157,6 @@ const SignUp = () => {
               ) : null}
             </div>
 
-            <div className="fullAddress flex flex-col gap-2 border border-1 border-slate-400 rounded p-2">
-              <label htmlFor="fullAddress">Enter your Address</label>
-              <input
-                type="text"
-                id="fullAddress"
-                name="fullAddress"
-                onChange={formik.handleChange}
-                value={formik.values.fullAddress}
-                placeholder="Enter your fullAddress"
-              />
-              {formik.touched.fullAddress && formik.errors.fullAddress ? (
-                <div>{formik.errors.fullAddress}</div>
-              ) : null}
-            </div>
-
             <div className="password flex flex-col gap-2 border border-1 border-slate-400 rounded p-2">
               <label htmlFor="signUpPassword">password</label>
               <input
@@ -188,15 +171,7 @@ const SignUp = () => {
                 <div>{formik.errors.signUpPassword}</div>
               ) : null}
             </div>
-            <div className="image password flex flex-col gap-2 border border-1 border-slate-400 rounded p-2">
-                <input
-                  type="file"
-                  name="image"
-                  onChange={formik.handleChange}
-                  value={formik.values.image}
-                  accept="image/*"
-                />
-              </div>
+
             <button type="submit" className="w-full bg-slate-500">
               submit
             </button>

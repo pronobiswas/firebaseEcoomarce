@@ -32,7 +32,7 @@ const Header = () => {
   };
 
   const handleProfile = () => {
-    navigate("/profile");
+    logInUser ? navigate("/profile"): toast("you must login first");
     setToggleUserBox(false);
   };
 

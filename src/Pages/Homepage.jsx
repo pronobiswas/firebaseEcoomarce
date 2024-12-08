@@ -18,6 +18,7 @@ import Decoration from "../component/Decoration.jsx";
 import moment from "moment";
 import { generateToken, messaging } from "../config/firebaseConfigaration.js";
 import { onMessage } from "firebase/messaging";
+import BrowseByCategory from "../component/BrowseByCategory.jsx";
 
 const Homepage = () => {
   const dispatch = useDispatch();
@@ -56,10 +57,12 @@ const Homepage = () => {
   };
 
   return (
+    // =======main body or rapper========
     <div className="w-full max-w-[1200px] h-full mx-auto flex">
+      {/* =====firstColum and the filtermenu======== */}
       <div className="filterMenu hidden md:block md:w-1/6  lg:w-1/6  h-full min-h-screen  bg-slate-200 px-2">
         <h2 className="text-2xl">the filter</h2>
-        <div>
+        <div className="flex flex-col gap-y-4">
           <details>
             <summary>basaVara</summary>
             <p>Bachelor</p>
@@ -89,9 +92,16 @@ const Homepage = () => {
           </details>
         </div>
       </div>
-
+      {/* ======content are here====== */}
       <div className="contentSection w-full md:w-5/6 lg:w-4/6 h-full">
+      {/* banner===== */}
+      {/* banner===== */}
         <Banner />
+        {/* BrowsebyCategory========= */}
+        {/* BrowsebyCategory========= */}
+        <BrowseByCategory/>
+        {/* allpost====== */}
+        {/* allpost====== */}
         <div className="w-full">
           <div className="flex items-center justify-between mb-4">
             <h2>All post are avialable here</h2>
@@ -137,10 +147,13 @@ const Homepage = () => {
             </Swiper>
           </div>
         </div>
+        {/* basaVara====== */}
+        {/* basaVara====== */}
         <BasaVara />
+        {/* Decoretion========= */}
         <Decoration />
       </div>
-
+      {/* =======third colum or adversment section======= */}
       <div className="adversmentSection w-1/6 hidden lg:block h-full min-h-[600px] bg-slate-500 px-2">
         <h2>the addversment</h2>
       </div>
