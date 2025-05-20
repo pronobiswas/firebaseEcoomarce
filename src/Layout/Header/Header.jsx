@@ -52,16 +52,16 @@ const Header = () => {
     <>
       <header>
       <ToastContainer />
-        <nav className="w-full px-1">
-          <div className="w-full h-full max-w-[1200px] relative mx-auto flex flex-col md:flex-row  items-center gap-5 justify-between ">
+        <nav className="w-full px-1 py-3">
+          <div className="w-full h-full max-w-[1400px] relative mx-auto flex flex-col md:flex-row  items-center gap-5 justify-between ">
             <div className="logo max-w-[120px] h-14 overflow-hidden">
               <Link to={"/"}>
                 <img src={logo} alt="logo" />
               </Link>
             </div>
 
-            <div className="navigationFrom w-full flex items-center justify-center gap-4">
-              <select className="w-full">
+            <div className="navigationFrom w-full  border flex items-center justify-center gap-4">
+              <select className="w-full border py-2">
                 <option value="dhaka">Dhaka</option>
                 <option value="dhaka">Khulna</option>
                 <option value="dhaka">Chitagong</option>
@@ -69,11 +69,12 @@ const Header = () => {
                 <option value="dhaka">Rangpur</option>
                 <option value="dhaka">Barishal</option>
               </select>
-              <div className="searchInput w-full  flex items-center">
+              <div className="searchInput w-full  flex items-center border ">
                 <input
                   type="text"
                   placeholder="search here"
-                  className=" w-full"
+                  className=" w-full py-1 "
+                  
                 />
                 <span className=" text-2xl">
                   <CiSearch />
@@ -93,7 +94,7 @@ const Header = () => {
               {/* ===========user icon======== */}
               <div
                 onClick={handletoggleUserBox}
-                className="bg-slate-300 p-2 rounded-full"
+                className="bg-slate-300 p-2 rounded-full cursor-pointer hover:scale-110 hover:shadow-2xl"
               >
                 <FaRegUserCircle />
               </div>

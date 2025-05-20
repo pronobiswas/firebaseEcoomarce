@@ -40,11 +40,11 @@ const BasaVara = () => {
 
   return (
     <div>
-      <div className="mt-10">
+      <div className="mt-10 ">
         <h2>BasaVra post are avialable here</h2>
         {/* ===========slidertest======== */}
         <Swiper
-          slidesPerView={4}
+          slidesPerView={8}
           spaceBetween={2}
           pagination={{
             clickable: true,
