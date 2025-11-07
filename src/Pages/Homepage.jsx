@@ -92,6 +92,11 @@ const Homepage = () => {
               <p>khulna</p>
             </details>
           </div>
+          <div>
+            <p><Link to={"/ShapeEditor"}>ShapeEditor</Link></p>
+            <p><Link to={"/test"}>Testpage</Link></p>
+            <p><Link to={"/DynamicShape"}>DynamicShape</Link></p>
+          </div>
         </div>
         {/* ======content are here====== */}
         <div className="contentSection w-full md:w-5/6 lg:w-4/6 h-full">
