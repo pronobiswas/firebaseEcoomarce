@@ -14,6 +14,9 @@ import ItemDetails from './Pages/ItemDetails';
 import UserProfile from './Pages/UserProfile';
 import AllPost from './component/AllPost';
 import DraftComponent from './component/DraftComponent';
+import Testpage from './Pages/Testpage';
+import DynamicShape from './Pages/DynamicShape';
+import ShapeEditor from './Pages/ShapeEditor';
 
 function App() {
 
@@ -30,6 +33,9 @@ function App() {
           <Route path='/post' element={<PostPage/>}/>
           <Route path='/draft' element={<DraftComponent/>}/>
           <Route path='/itemDetails' element={<ItemDetails/>}/>
+          <Route path='/test' element={<Testpage/>}/>
+          <Route path='/DynamicShape' element={<DynamicShape />}/>
+          <Route path='/ShapeEditor' element={<ShapeEditor />}/>
         </Route>
       </>
     )
